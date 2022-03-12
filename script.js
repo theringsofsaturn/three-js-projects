@@ -54,6 +54,7 @@ const sizes = {
 // CAMERA
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 scene.add(camera);
+camera.position.z = 3;
 
 // RENDERER CREATION
 // We will simply ask the renderer to render our scene from the camera point of view, and the result will be drawn into a canvas. We can create the canvas by ourselves, or let the renderer generate it and then add it to our page. In the index.html we've created the <canvas> element before we load the scripts and gave it a class "webgl".
@@ -73,3 +74,6 @@ const renderer = new THREE.WebGLRenderer({
   canvas: canvas, // if property and variable are the same, we can omit the property
 });
 renderer.setSize(sizes.width, sizes.height); // set the size of the renderer to the size of the canvas
+
+// RENDER
+renderer.render(scene, camera)
