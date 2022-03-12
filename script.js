@@ -1,6 +1,6 @@
 // console.log(THREE) // The THREE variable (in uppercase) contains most of the classes and properties we might need on a classic Three.js project. Unfortunately, not all classes are inside this variable.
 
-// Create a scene
+// CREATE A SCENE
 const scene = new THREE.Scene();
 
 // OBJECT CREATION
@@ -28,7 +28,7 @@ scene.add(mesh);
 // If we don't add an object to the scene, we won't be able to see it.
 
 // CAMERA CREATION
-// The camera is not visible. It's more like a theoretical point of view. When we will do a render of our scene, it will be from that camera's point of view.  
+// The camera is not visible. It's more like a theoretical point of view. When we will do a render of our scene, it will be from that camera's point of view.
 
 // We can have multiple cameras just like on a movie set, and We can switch between those cameras as We please. Usually, we only use one camera.
 
@@ -47,14 +47,29 @@ scene.add(mesh);
 
 // SIZES
 const sizes = {
-    width: 800,
-    height: 600
-}
+  width: 800,
+  height: 600,
+};
 
 // CAMERA
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
-scene.add(camera)
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
+scene.add(camera);
 
-// RENDERER
+// RENDERER CREATION
 // We will simply ask the renderer to render our scene from the camera point of view, and the result will be drawn into a canvas. We can create the canvas by ourselves, or let the renderer generate it and then add it to our page. In the index.html we've created the <canvas> element before we load the scripts and gave it a class "webgl".
 
+// To create the renderer, we use the WebGLRenderer class with one parameter: an object {} containing all the options. We need to specify the canvas property corresponding to the <canvas> we added to the html page.
+
+// Create a canvas variable, then fetch and store in it the element we created in the HTML, using document.querySelector(...). It's better to assign the canvas to a variable because we'll use it for other purposes later.
+
+// CANVAS
+const canvas = document.querySelector(".webgl");
+console.log(canvas);
+
+// We also need to update the size of our renderer with the setSize(...) method using the sizes object we created earlier. The setSize(...) method will automatically resize our <canvas> accordingly:
+
+// RENDERER
+const renderer = new THREE.WebGLRenderer({
+  canvas: canvas, // if property and variable are the same, we can omit the property
+});
+renderer.setSize(sizes.width, sizes.height); // set the size of the renderer to the size of the canvas
