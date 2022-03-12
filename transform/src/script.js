@@ -30,9 +30,13 @@ scene.add(mesh);
 // The meaning of 1 unit, it's up to us. 1 can be 1 centimeter, 1 meter, or even 1 kilometer. I recommend that we adapt the unit to what we want to build. If we're going to create a house, we probably should think of 1 unit as 1 meter.
 
 // Position can be declared anywhere, but before calling the render(...) method.
-mesh.position.x = 0.7;
-mesh.position.y = -0.6;
-mesh.position.z = 1;
+// mesh.position.x = 0.7;
+// mesh.position.y = -0.6;
+// mesh.position.z = 1;
+// To change the values, instead of changing x, y and z separately, we can also use the set(...) method:
+// mesh.position.set(0.7, -0.6, 1);
+// **Note: Position is a vector3
+
 
 // The position property is not any object. It's an instance of the Vector3 class. While this class has an x, a y, and a z property, it also has many useful methods.
 
@@ -45,12 +49,9 @@ console.log(mesh.position.length());
 // We can normalize its values (meaning that we will reduce the length of the vector to 1 unit but preserve its direction):
 // mesh.position.normalize()
 
-// To change the values, instead of changing x, y and z separately, we can also use the set(...) method:
-mesh.position.set(0.7, -0.6, 1);
-// **Note: Position is a vector3
-
 // AXES HELPER
 // The AxesHelper will display 3 lines corresponding to the x, y and z axes, each one starting at the center of the scene and going in the corresponding direction.
+
 // To create the AxesHelper, instantiate it and add it to the scene right after instantiating that scene. We can specify the length of the lines as the only parameter.
 const axesHelper = new THREE.AxesHelper(2);
 scene.add(axesHelper); // it's an object and every object needs to be added to the scene
@@ -61,13 +62,35 @@ scene.add(axesHelper); // it's an object and every object needs to be added to t
 // scale is also a Vector3. By default, x, y and z are equal to 1, meaning that the object has no scaling applied. If we put 0.5 as a value, the object will be half of its size on this axis, and if we put 2 as a value, it will be twice its original size on this axis.
 // mesh.scale.x = 2
 // mesh.scale.y = 0.25
-// mesh.scale.z = 0.5 
+// mesh.scale.z = 0.5
 // Or we can use the set:
-mesh.scale.set(2, 0.25, 0.5)
-// Notes:** 
+// mesh.scale.set(2, 0.25, 0.5)
+// Notes:**
 // 1. Clearly, we cannot see the z scale because our Mesh is facing the camera.
 // 2. While we can use negative values, it might generate bugs later on because axes won't be oriented in the logical direction. Try to avoid doing it.
 // 3. Because it's a Vector3, we can use all the previously mentioned methods.
+
+// ROTATE OBJECTS
+// Rotation is a little more troublesome than position and scale. There are two ways of handling a rotation.
+
+// We can use the self-evident rotation property, but we can also use the less obvious quaternion property. Three.js supports both, and updating one will automatically update the other. It's just a matter of which one we prefer.
+
+// ROTATION
+// The rotation property also has x, y, and z properties, but instead of a Vector3, it's a Euler. When you change the x, y, and z properties of a Euler, you can imagine putting a stick through your object's center in the axis's direction and then rotating that object on that stick.
+
+// 1. If we spin on the y axis, we can picture it like a carousel.
+// 2. If we spin on the x axis, we can imagine that we are rotating the wheels of a car we'd be in.
+// 3. And if we rotate on the z axis, we can imagine that we are rotating the propellers in front of an aircraft we'd be in.
+
+// The value of these axes is expressed in radians. If we want to achieve half a rotation, we'll have to write something like 3.14159... we probably recognize that number as π. In native JavaScript, we can end up with an approximation of π using Math.PI.
+
+mesh.rotation.x = Math.PI * 0.25;
+mesh.rotation.y = Math.PI * 0.25;
+
+// Notes** Seems easy but  when we combine those rotations, we might end up with strange results. Why? Because, while we rotate the x axis, we also change the other axes' orientation. The rotation applies in the following order: x, y, and then z. That can result in weird behaviors like one named gimbal lock when one axis has no more effect, all because of the previous ones. 
+// We can change this order by using the reorder(...) method object.rotation.reorder('yxz')
+
+// While Euler is easier to understand, this order problem can cause issues. And this is why most engines and 3D softwares use another solution named Quaternion.
 
 // SIZES
 const sizes = {
