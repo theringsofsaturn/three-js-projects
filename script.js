@@ -76,6 +76,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height); // set the size of the renderer to the size of the canvas
 
 // RENDER
+// The render is like a screenshot! And for that we need a camera and the scene we are photographing.
 // Call the render(...) method on the renderer and send it the scene and the camera as parameters:
 renderer.render(scene, camera)
 // Note** Seeing nothing? Here's the issue: we haven't specified our object's position, nor our camera's. Both are in the default position, which is the center of the scene and we can't see an object from its inside (by default).
