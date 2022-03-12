@@ -54,6 +54,8 @@ mesh.position.set(0.7, -0.6, 1);
 // To create the AxesHelper, instantiate it and add it to the scene right after instantiating that scene. We can specify the length of the lines as the only parameter.
 const axesHelper = new THREE.AxesHelper(2)
 scene.add(axesHelper)
+// Note** We should see a green and a red line.
+// The green line corresponds to the y axis. The red line corresponds to the x axis and there is a blue line corresponding to the z axis but we can't see it because it's perfectly aligned with the camera.
 
 // SIZES
 const sizes = {
