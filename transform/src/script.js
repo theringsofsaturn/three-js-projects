@@ -42,11 +42,18 @@ console.log(mesh.position.length());
 // We can get the distance from another Vector3 (make sure to use this code after creating the camera = So, this should be below in the camera section after declaring it. If not we'll get an error "cannot access "camera before initialization").):
 // console.log(mesh.position.distanceTo(camera.position))
 
-// You can normalize its values (meaning that you will reduce the length of the vector to 1 unit but preserve its direction):
-console.log(mesh.position.normalize())
+// We can normalize its values (meaning that you will reduce the length of the vector to 1 unit but preserve its direction):
+// mesh.position.normalize()
 
 // To change the values, instead of changing x, y and z separately, we can also use the set(...) method:
-mesh.position.set(0.7, - 0.6, 1)
+mesh.position.set(0.7, -0.6, 1);
+// **Note: Position is a vector3
+
+// AXES HELPER
+// The AxesHelper will display 3 lines corresponding to the x, y and z axes, each one starting at the center of the scene and going in the corresponding direction.
+// To create the AxesHelper, instantiate it and add it to the scene right after instantiating that scene. We can specify the length of the lines as the only parameter.
+const axesHelper = new THREE.AxesHelper(2)
+scene.add(axesHelper)
 
 // SIZES
 const sizes = {
@@ -59,7 +66,7 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 camera.position.z = 3;
 scene.add(camera);
 
-console.log(mesh.position.distanceTo(camera.position))
+console.log(mesh.position.distanceTo(camera.position));
 
 // RENDERER
 const renderer = new THREE.WebGLRenderer({
