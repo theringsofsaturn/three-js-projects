@@ -76,4 +76,13 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height); // set the size of the renderer to the size of the canvas
 
 // RENDER
+// Call the render(...) method on the renderer and send it the scene and the camera as parameters:
 renderer.render(scene, camera)
+// Note** Seeing nothing? Here's the issue: we haven't specified our object's position, nor our camera's. Both are in the default position, which is the center of the scene and we can't see an object from its inside (by default).
+// We need to move things.
+// To do that, we have access to multiple properties on each object, such as position, rotation, and scale. For now, we use the position property to move the camera backward.
+// The position property is an object with three relevant properties: x, y and z. By default, Three.js considers the forward/backward axis to be z.
+// To move the camera backward, we need to provide a positive value to that property. we can do that anywhere once we've created the camera variable, yet it has to happen before we do the render:
+// camera.position.z = 3 (added above in the CAMERA section)
+
+// ** The render looks like a square, and that's because the camera aligns perfectly with the cube, and we can see only one side of it.
