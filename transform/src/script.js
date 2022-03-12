@@ -1,6 +1,17 @@
 import "./style.css";
 import * as THREE from "three";
 
+// CANVAS
+const canvas = document.querySelector("canvas.webgl");
+
+// SCENE
+const scene = new THREE.Scene();
+
+// OBJECTS
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const mesh = new THREE.Mesh(geometry, material);
+
 // There are 4 properties to transform objects in our scene
 
 // position (to move the object)
@@ -17,21 +28,25 @@ import * as THREE from "three";
 
 // The meaning of 1 unit, it's up to us. 1 can be 1 centimeter, 1 meter, or even 1 kilometer. I recommend that we adapt the unit to what we want to build. If we're going to create a house, we probably should think of 1 unit as 1 meter.
 
-// CANVAS
-const canvas = document.querySelector("canvas.webgl");
-
-// SCENE
-const scene = new THREE.Scene();
-
-// OBJECTS
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-const mesh = new THREE.Mesh(geometry, material);
 // Position can be declared anywhere, but before calling the render(...) method.
 mesh.position.x = 0.7;
 mesh.position.y = -0.6;
 mesh.position.z = 1;
 scene.add(mesh);
+
+// The position property is not any object. It's an instance of the Vector3 class. While this class has an x, a y, and a z property, it also has many useful methods.
+
+// We can get the length of a vector. The distance of the center of the scene and our object position.
+console.log(mesh.position.length());
+
+// We can get the distance from another Vector3 (make sure to use this code after creating the camera = So, this should be below in the camera section after declaring it. If not we'll get an error "cannot access "camera before initialization").):
+// console.log(mesh.position.distanceTo(camera.position))
+
+// You can normalize its values (meaning that you will reduce the length of the vector to 1 unit but preserve its direction):
+console.log(mesh.position.normalize())
+
+// To change the values, instead of changing x, y and z separately, we can also use the set(...) method:
+mesh.position.set(0.7, - 0.6, 1)
 
 // SIZES
 const sizes = {
@@ -43,6 +58,8 @@ const sizes = {
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 camera.position.z = 3;
 scene.add(camera);
+
+console.log(mesh.position.distanceTo(camera.position))
 
 // RENDERER
 const renderer = new THREE.WebGLRenderer({
