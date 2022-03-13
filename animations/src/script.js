@@ -1,35 +1,35 @@
-import './style.css'
-import * as THREE from 'three'
+import "./style.css";
+import * as THREE from "three";
 
 // CANVAS
-const canvas = document.querySelector('canvas.webgl')
+const canvas = document.querySelector("canvas.webgl");
 
 // SCENE
-const scene = new THREE.Scene()
+const scene = new THREE.Scene();
 
 // OBJECT
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
 
 // SIZES
 const sizes = {
-    width: 800,
-    height: 600
-}
+  width: 800,
+  height: 600,
+};
 
 // CAMERA
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
-camera.position.z = 3
-scene.add(camera)
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
+camera.position.z = 3;
+scene.add(camera);
 
 // RENDERER
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-})
-renderer.setSize(sizes.width, sizes.height)
-renderer.render(scene, camera)
+  canvas: canvas,
+});
+renderer.setSize(sizes.width, sizes.height);
+renderer.render(scene, camera);
 
 // ANIMATION
 
@@ -49,11 +49,16 @@ renderer.render(scene, camera)
 // Create a function named loop and call this function once. In this function, use window.requestAnimationFrame(...) to call this same function on the next frame:
 
 // ANIMATE
- const loop = () =>
- {
-     console.log('loop')
- 
-     window.requestAnimationFrame(loop)
- }
- 
- loop()
+const loop = () => {
+  //  console.log('loop')
+
+  // Update objects
+  mesh.rotation.y += 0.01;
+
+  // Render
+  renderer.render(scene, camera);
+
+  window.requestAnimationFrame(loop); // don't call loop() but just provide it as a parameter. It will be called on the next frame.
+};
+
+loop(); // That's it. We have our infinite loop.
