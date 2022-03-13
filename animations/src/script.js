@@ -75,16 +75,43 @@ renderer.render(scene, camera);
 // What we need now is to subtract the current timestamp to that of the previous frame to get what we can call the deltaTime and use this value when animating objects:
 
 // ANIMATE
-let time = Date.now();
+// let time = Date.now();
+
+// const loop = () => {
+//   // Time
+//   const currentTime = Date.now();
+//   const deltaTime = currentTime - time;
+//   time = currentTime;
+
+//   // Update objects
+//   mesh.rotation.y += 0.001 * deltaTime;
+
+//   // Render
+//   renderer.render(scene, camera);
+
+//   window.requestAnimationFrame(loop); // don't call loop() but just provide it as a parameter. It will be called on the next frame.
+
+//   // ...
+// };
+
+// loop();
+
+// The cube should rotate faster because the deltaTime should be around 16 if our screen is running at 60fps, so feel free to reduce it by multiplying the value.
+
+// Now that we base our rotation on how much time was spent since the last frame, this rotation speed will be the same on every screen and every computers regardless of the frame rate.
+
+// USING CLOCK
+// While this code isn't that complicated, there is a built-in solution in Three.js named Clock that will handle the time calculations. We simply have to instantiate a Clock variable and use the built-in methods like getElapsedTime(). This method will return how many seconds have passed since the Clock was created.
+// We can use this value to rotate the object:
+
+// ANIMATE
+const clock = new THREE.Clock();
 
 const loop = () => {
-  // Time
-  const currentTime = Date.now();
-  const deltaTime = currentTime - time;
-  time = currentTime;
+  const elapsedTime = clock.getElapsedTime();
 
   // Update objects
-  mesh.rotation.y += 0.001 * deltaTime;
+  mesh.rotation.y = elapsedTime;
 
   // Render
   renderer.render(scene, camera);
@@ -95,7 +122,3 @@ const loop = () => {
 };
 
 loop();
-
-// The cube should rotate faster because the deltaTime should be around 16 if our screen is running at 60fps, so feel free to reduce it by multiplying the value.
-
-// Now that we base our rotation on how much time was spent since the last frame, this rotation speed will be the same on every screen and every computers regardless of the frame rate.
