@@ -49,16 +49,53 @@ renderer.render(scene, camera);
 // Create a function named loop and call this function once. In this function, use window.requestAnimationFrame(...) to call this same function on the next frame:
 
 // ANIMATE
+// const loop = () => {
+//   //  console.log('loop')
+
+//   // Update objects
+//   mesh.rotation.y += 0.01;
+
+//   // Render
+//   renderer.render(scene, camera);
+
+//   window.requestAnimationFrame(loop); // don't call loop() but just provide it as a parameter. It will be called on the next frame.
+// };
+
+// loop(); // That's it. We have our infinite loop.
+
+// Note**: The problem is, if we test this code on a computer with high frame rate, the cube will rotate faster, and if we test on a lower frame rate, the cube will rotate slower.
+
+// ADAPTATION TO THE FRAMERATE
+// To adapt the animation to the framerate, we need to know how much time it's been since the last loop.
+
+// First, we need a way to measure time. In native JavaScript, we can use Date.now() to get the current timestamp:
+// const time = Date.now();
+// The timestamp corresponds to how much time has passed since the 1st of January 1970 (the beginning of time for Unix). In JavaScript, its unit is in milliseconds.
+
+// What we need now is to subtract the current timestamp to that of the previous frame to get what we can call the deltaTime and use this value when animating objects:
+
+// ANIMATE
+let time = Date.now();
+
 const loop = () => {
-  //  console.log('loop')
+  // Time
+  const currentTime = Date.now();
+  const deltaTime = currentTime - time;
+  time = currentTime;
 
   // Update objects
-  mesh.rotation.y += 0.01;
+  mesh.rotation.y += 0.001 * deltaTime;
 
   // Render
   renderer.render(scene, camera);
 
   window.requestAnimationFrame(loop); // don't call loop() but just provide it as a parameter. It will be called on the next frame.
+
+  // ...
 };
 
-loop(); // That's it. We have our infinite loop.
+loop();
+
+// The cube should rotate faster because the deltaTime should be around 16 if our screen is running at 60fps, so feel free to reduce it by multiplying the value.
+
+// Now that we base our rotation on how much time was spent since the last frame, this rotation speed will be the same on every screen and every computers regardless of the frame rate.
