@@ -112,6 +112,8 @@ const loop = () => {
 
   // Update objects
   mesh.rotation.y = elapsedTime;
+//   mesh.position.x = Math.cos(elapsedTime);
+//   mesh.position.y = Math.sin(elapsedTime);
 
   // Render
   renderer.render(scene, camera);
@@ -122,3 +124,5 @@ const loop = () => {
 };
 
 loop();
+
+// Another available method is getDelta(...), but we should not use it unless we know exactly what's going on in the Clock class code. Using it might mess with our animation, and we'll get unwanted results.
