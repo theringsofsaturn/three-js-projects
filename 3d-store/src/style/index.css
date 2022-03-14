@@ -1,0 +1,23 @@
+.book-cover {
+  height: 15em;
+}
+
+.book-cover-small {
+  height: 7em;
+  margin-right: 1em;
+  margin-left: 1em;
+}
+
+.book-image {
+  height: 80px;
+  margin-right: 2em;
+}
+
+.background-div {
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.border-thick {
+  border-width: 3px;
+}
