@@ -125,12 +125,33 @@ const cursor = {
   y: 0,
 };
 
+// window.addEventListener("mousemove", (event) => {
+//   cursor.x = event.clientX / sizes.width - 0.5;
+//   cursor.y = event.clientY / sizes.height - 0.5;
+
+//   console.log(cursor.x, cursor.y);
+// });
+
+// Dividing event.clientX by sizes.width will give us a value between 0 and 1 (if we keep the cursor above the canvas) while subtracting 0.5 will give we a value between - 0.5 and 0.5.
+
+// We now have the mouse position stored in the cursor object variable, and we can update the position of the camera in the loop function (check in the "Animate" section **1//commented).
+
+// it's working but the axes movements seem kind of wrong. This is due to the position.y axis being positive when going upward in Three.js but the clientY axis being positive when going downward in the webpage.
+
+// We can simply invert the cursor.y while updating it by adding a - in front of the whole formula (don't forget the parentheses):
 window.addEventListener("mousemove", (event) => {
   cursor.x = event.clientX / sizes.width - 0.5;
-  cursor.y = event.clientY / sizes.height - 0.5;
-
-  console.log(cursor.x, cursor.y);
+  cursor.y = -(event.clientY / sizes.height - 0.5);
 });
+
+// Finally, we can increase the amplitude by multiplying the cursor.x and cursor.y and ask the camera to look at the mesh using the lookAt(...) method. (Animate section ** 2 //commented)
+
+// We can go even further by doing a full rotation of the camera around the mesh by using Math.sin(...) and Math.cos(...).
+// sin and cos, when combined and used with the same angle, enable us to place things on a circle. To do a full rotation, that angle must have an amplitude of 2 times π (called "pi"). Just so we know, a full rotation is called a "tau" but we don't have access to this value in JavaScript and we have to use π instead.
+
+// We can access an approximation of π in native JavaScript using Math.PI.
+
+// To increase the radius of that circle, we can simply multiply the result of Math.sin(...) and Math.cos(...):
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -141,17 +162,36 @@ renderer.setSize(sizes.width, sizes.height);
 // Animate
 const clock = new THREE.Clock();
 
-const tick = () => {
+const loop = () => {
   const elapsedTime = clock.getElapsedTime();
 
   // Update objects
   mesh.rotation.y = elapsedTime;
 
+  // Update camera ** 1 //commented
+  //   camera.position.x = cursor.x;
+  //   camera.position.y = cursor.y;
+
+  // Update camera ** 2 //commented
+  //   camera.position.x = cursor.x * 5;
+  //   camera.position.y = cursor.y * 5;
+  //   camera.lookAt(mesh.position);
+
+  // Update camera
+  camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 2;
+  camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 2;
+  camera.position.y = cursor.y * 3;
+  camera.lookAt(mesh.position);
+
+  // While this is a good start to control the camera, Three.js has integrated multiple classes called controls to help us do the same and much more.
+
+  // BUILT-IN CONTROLS
+
   // Render
   renderer.render(scene, camera);
 
-  // Call tick again on the next frame
-  window.requestAnimationFrame(tick);
+  // Call loop again on the next frame
+  window.requestAnimationFrame(loop);
 };
 
-tick();
+loop();
