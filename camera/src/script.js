@@ -190,6 +190,9 @@ const loop = () => {
   // DeviceOrientationControls
   // DeviceOrientationControls will automatically retrieve the device orientation if your device, OS, and browser allow it and rotate the camera accordingly. You can use it to create immersive universes or VR experiences if you have the right equipment.
 
+// FlyControls
+// FlyControls enable moving the camera like if you were on a spaceship. You can rotate on all 3 axes, go forward and go backward.
+
   // Render
   renderer.render(scene, camera);
 
