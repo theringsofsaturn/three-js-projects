@@ -187,6 +187,9 @@ const loop = () => {
 
   // BUILT-IN CONTROLS
 
+  // DeviceOrientationControls
+  // DeviceOrientationControls will automatically retrieve the device orientation if your device, OS, and browser allow it and rotate the camera accordingly. You can use it to create immersive universes or VR experiences if you have the right equipment.
+
   // Render
   renderer.render(scene, camera);
 
