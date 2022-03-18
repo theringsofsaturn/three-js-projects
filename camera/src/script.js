@@ -202,6 +202,9 @@ const loop = () => {
   //* OrbitControls
   // OrbitControls is very similar to the controls we made in the previous lesson. You can rotate around a point with the left mouse, translate laterally using the right mouse, and zoom in or out using the wheel.
 
+  //* TrackballControls
+  // TrackballControls is just like OrbitControls but there are no limits in terms of vertical angle. You can keep rotating and do spins with the camera even if the scene gets upside down.
+
   // Render
   renderer.render(scene, camera);
 
