@@ -193,6 +193,9 @@ const loop = () => {
 // FlyControls
 // FlyControls enable moving the camera like if you were on a spaceship. You can rotate on all 3 axes, go forward and go backward.
 
+// FirstPersonControls
+// FirstPersonControls is just like FlyControls, but with a fixed up axis. You can see that like a flying bird view where the bird cannot do a barrel roll. While the FirstPersonControls contains "FirstPerson," it doesn't work like in FPS games
+
   // Render
   renderer.render(scene, camera);
 
