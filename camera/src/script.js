@@ -205,6 +205,9 @@ const loop = () => {
   //* TrackballControls
   // TrackballControls is just like OrbitControls but there are no limits in terms of vertical angle. You can keep rotating and do spins with the camera even if the scene gets upside down.
 
+  //* TransformControls
+  // TransformControls has nothing to do with the camera. You can use it to add a gizmo to an object to move that object.
+
   // Render
   renderer.render(scene, camera);
 
