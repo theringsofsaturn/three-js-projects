@@ -24,11 +24,6 @@ const mesh = new THREE.Mesh(
 scene.add(mesh);
 
 // CAMERA
-camera.position.x = 2;
-camera.position.y = 2;
-camera.position.z = 2;
-camera.lookAt(mesh.position);
-scene.add(camera);
 
 //  PerspectiveCamera
 // PerspectiveCamera class needs some parameters to be instantiated
@@ -38,6 +33,12 @@ const camera = new THREE.PerspectiveCamera(
   1, // Near clipping plane
   100 // Far clipping plane
 );
+camera.position.x = 2;
+camera.position.y = 2;
+camera.position.z = 2;
+camera.lookAt(mesh.position);
+scene.add(camera);
+
 // FIELD OF VIEW
 // The first parameter called field of view corresponds to our camera view's vertical amplitude angle in degrees. If we use a small angle, we'll end up with a long scope effect, and if we use a wide-angle, we'll end up with a fish eye effect because, in the end, what the camera sees will be stretched or squeezed to fit the canvas.
 
@@ -50,7 +51,7 @@ const camera = new THREE.PerspectiveCamera(
 // NEAR AND FAR
 // The third and fourth parameters called near and far, correspond to how close and how far the camera can see. Any object or part of the object closer to the camera than the near value or further away from the camera than the far value will not show up on the render.
 
-//  might be tempted to use very small and very large values like 0.0001 and 9999999 you might end up with a bug called z-fighting where two faces seem to fight for which one will be rendered above the other.
+//  might be tempted to use very small and very large values like 0.0001 and 9999999 we might end up with a bug called z-fighting where two faces seem to fight for which one will be rendered above the other.
 // https://twitter.com/FreyaHolmer/status/799602767081848832
 
 // https://twitter.com/Snapman_I_Am/status/800567120765616128
@@ -59,6 +60,24 @@ const camera = new THREE.PerspectiveCamera(
 
 // OrthographicCamera
 // The OrthographicCamera is used to create orthographic renders of our scene without perspective. It's useful if we make an RTS game like Age of Empire. Elements will have the same size on the screen regardless of their distance from the camera.
+// The OrthographicCamera differs from the PerspectiveCamera by its lack of perspective, meaning that the objects will have the same size regardless of their distance from the camera.
+// The parameters we have to provide are very different from the PerspectiveCamera.
+// Instead of a field of view, we must provide how far the camera can see in each direction (left, right, top and bottom). Then we can provide the near and far values just like we did for the PerspectiveCamera.
+
+// const camera = new THREE.OrthographicCamera(- 1, 1, 1, - 1, 0.1, 100)
+
+// As we can see, there is no perspective, and the sides of our cube seem parallel. The problem is that our cube doesn't look cubic.
+
+// That is due to the values we provided for the left, right, top, and bottom which are 1 or - 1, meaning that we render a square area, but that square area will be stretched to fit our rectangle canvas and our canvas isn't a square.
+
+// We need to use the canvas ratio (width by height). Let's create a variable named aspectRatio (just like the PerspectiveCamera) and store that ratio in it:
+
+// const aspectRatio = sizes.width / sizes.height
+// const camera = new THREE.OrthographicCamera(- 1 * aspectRatio, 1 * aspectRatio, 1, - 1, 0.1, 100)
+
+// This results in a render area width larger than the render area height because our canvas width is larger than its height.
+
+// We now have a cube that looks like a cube.
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
