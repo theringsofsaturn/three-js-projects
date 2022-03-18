@@ -101,8 +101,35 @@ scene.add(camera);
 
 // The coordinates will be located in the argument of the callback function as event.clientX and event.clientY:
 // Cursor
+// window.addEventListener("mousemove", (event) => {
+//   console.log(event.clientX, event.clientY);
+// });
+
+// JavaScript
+// We could use those values, but it's recommended to adjusti them. By adjusting, we mean to have a 1 amplitude and that the value can be both negative and positive.
+
+// If we only focus on the x value, that would mean that:
+
+// if our cursor is on the far left of the canvas, we should get - 0.5
+// if our cursor is at the center of the canvas, we should get 0
+// if our cursor is at the far right of the canvas, we should get 0.5
+// While this is not mandatory, it helps to have clean values like that.
+
+// Just like the size variable, we will create a cursor variable with default x and y properties and then update those properties in the mousemove callback:
+
+// Just like the size variable, we will create a cursor variable with default x and y properties and then update those properties in the mousemove callback:
+
+// Cursor
+const cursor = {
+  x: 0,
+  y: 0,
+};
+
 window.addEventListener("mousemove", (event) => {
-  console.log(event.clientX, event.clientY);
+  cursor.x = event.clientX / sizes.width - 0.5;
+  cursor.y = event.clientY / sizes.height - 0.5;
+
+  console.log(cursor.x, cursor.y);
 });
 
 // Renderer
