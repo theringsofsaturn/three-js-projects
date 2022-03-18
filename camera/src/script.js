@@ -27,17 +27,17 @@ scene.add(mesh);
 
 //  PerspectiveCamera
 // PerspectiveCamera class needs some parameters to be instantiated
-const camera = new THREE.PerspectiveCamera(
-  75, // Field of view
-  sizes.width / sizes.height, // Aspect ratio
-  1, // Near clipping plane
-  100 // Far clipping plane
-);
-camera.position.x = 2;
-camera.position.y = 2;
-camera.position.z = 2;
-camera.lookAt(mesh.position);
-scene.add(camera);
+// const camera = new THREE.PerspectiveCamera(
+//   75, // Field of view
+//   sizes.width / sizes.height, // Aspect ratio
+//   1, // Near clipping plane
+//   100 // Far clipping plane
+// );
+// camera.position.x = 2;
+// camera.position.y = 2;
+// camera.position.z = 2;
+// camera.lookAt(mesh.position);
+// scene.add(camera);
 
 // FIELD OF VIEW
 // The first parameter called field of view corresponds to our camera view's vertical amplitude angle in degrees. If we use a small angle, we'll end up with a long scope effect, and if we use a wide-angle, we'll end up with a fish eye effect because, in the end, what the camera sees will be stretched or squeezed to fit the canvas.
@@ -78,6 +78,32 @@ scene.add(camera);
 // This results in a render area width larger than the render area height because our canvas width is larger than its height.
 
 // We now have a cube that looks like a cube.
+
+// CUSTOM CONTROLS
+// Camera
+const camera = new THREE.PerspectiveCamera(
+  75,
+  sizes.width / sizes.height,
+  1,
+  1000
+);
+
+// const aspectRatio = sizes.width / sizes.height
+// const camera = new THREE.OrthographicCamera(- 1 * aspectRatio, 1 * aspectRatio, 1, - 1, 0.1, 100)
+
+// camera.position.x = 2
+// camera.position.y = 2
+camera.position.z = 3;
+camera.lookAt(mesh.position);
+scene.add(camera);
+
+// To control the camera with our mouse, first of all, we want to know the mouse coordinates. We can do that using native JavaScript by listening to the mousemove event with addEventListener.
+
+// The coordinates will be located in the argument of the callback function as event.clientX and event.clientY:
+// Cursor
+window.addEventListener("mousemove", (event) => {
+  console.log(event.clientX, event.clientY);
+});
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
