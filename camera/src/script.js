@@ -1,5 +1,6 @@
 import "./style.css";
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 /**
  * Base
@@ -79,7 +80,6 @@ scene.add(mesh);
 
 // We now have a cube that looks like a cube.
 
-// CUSTOM CONTROLS
 // Camera
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -96,6 +96,10 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.z = 3;
 camera.lookAt(mesh.position);
 scene.add(camera);
+
+// Controls
+const controls = new OrbitControls(camera, canvas)
+controls.target.y = 2
 
 // To control the camera with our mouse, first of all, we want to know the mouse coordinates. We can do that using native JavaScript by listening to the mousemove event with addEventListener.
 
@@ -166,7 +170,7 @@ const loop = () => {
   const elapsedTime = clock.getElapsedTime();
 
   // Update objects
-  mesh.rotation.y = elapsedTime;
+  // mesh.rotation.y = elapsedTime;
 
   // Update camera ** 1 //commented
   //   camera.position.x = cursor.x;
@@ -177,42 +181,61 @@ const loop = () => {
   //   camera.position.y = cursor.y * 5;
   //   camera.lookAt(mesh.position);
 
-  // Update camera
-  camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 2;
-  camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 2;
-  camera.position.y = cursor.y * 3;
-  camera.lookAt(mesh.position);
+  // Update camera ** 3 //commented
+  // camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 2;
+  // camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 2;
+  // camera.position.y = cursor.y * 3;
+  // camera.lookAt(mesh.position);
 
-  // While this is a good start to control the camera, Three.js has integrated multiple classes called controls to help us do the same and much more.
-
-  // BUILT-IN CONTROLS
-
-  // *DeviceOrientationControls
-  // DeviceOrientationControls will automatically retrieve the device orientation if your device, OS, and browser allow it and rotate the camera accordingly. You can use it to create immersive universes or VR experiences if you have the right equipment.
-
-  //* FlyControls
-  // FlyControls enable moving the camera like if you were on a spaceship. You can rotate on all 3 axes, go forward and go backward.
-
-  //* FirstPersonControls
-  // FirstPersonControls is just like FlyControls, but with a fixed up axis. You can see that like a flying bird view where the bird cannot do a barrel roll. While the FirstPersonControls contains "FirstPerson," it doesn't work like in FPS games
-
-  //* PointerLockControls
-  // PointerLockControls uses the pointer lock JavaScript API. This API hides the cursor, keeps it centered, and keeps sending the movements in the mousemove event callback. With this API, you can create FPS games right inside the browser. While this class sounds very promising if you want to create that kind of interaction, it'll only handle the camera rotation when the pointer is locked. You'll have to handle the camera position and game physics by yourself.
-
-  //* OrbitControls
-  // OrbitControls is very similar to the controls we made in the previous lesson. You can rotate around a point with the left mouse, translate laterally using the right mouse, and zoom in or out using the wheel.
-
-  //* TrackballControls
-  // TrackballControls is just like OrbitControls but there are no limits in terms of vertical angle. You can keep rotating and do spins with the camera even if the scene gets upside down.
-
-  //* TransformControls
-  // TransformControls has nothing to do with the camera. You can use it to add a gizmo to an object to move that object.
+  // Update controls
+  controls.update()
 
   // Render
   renderer.render(scene, camera);
 
   // Call loop again on the next frame
-  window.requestAnimationFrame(loop);
+  // window.requestAnimationFrame(loop);
 };
 
 loop();
+
+// EXAMPLE ORBIT CONTROLS
+// INSTANTIATE ORBIT CONTROLS
+//   First, we need to instantiate a variable using the OrbitControls class. While you might think you can use THREE.OrbitControls here, you are unfortunately mistaken.
+
+// The OrbitControls class is part of those classes that are not available by default in the THREE variable. That decision helps to reduce the weight of the library. And this is where our Webpack template comes in.
+
+// The OrbitControls class may not be available in the THREE variable; it is still located in the dependencies folder. To import it, you must provide the path from inside the /node_modules/ folder, which is /three/examples/jsm/controls/OrbitControls.js:
+// * imported at the top
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+//! make sure to do that after creating the camera.
+
+// For it to work, you must provide the camera and the element in the page that will handle the mouse events as parameters: (Added above after the camera)
+
+// While this is a good start to control the camera, Three.js has integrated multiple classes called controls to help us do the same and much more.
+
+// BUILT-IN CONTROLS
+
+// *DeviceOrientationControls
+// DeviceOrientationControls will automatically retrieve the device orientation if your device, OS, and browser allow it and rotate the camera accordingly. You can use it to create immersive universes or VR experiences if you have the right equipment.
+
+//* FlyControls
+// FlyControls enable moving the camera like if you were on a spaceship. You can rotate on all 3 axes, go forward and go backward.
+
+//* FirstPersonControls
+// FirstPersonControls is just like FlyControls, but with a fixed up axis. You can see that like a flying bird view where the bird cannot do a barrel roll. While the FirstPersonControls contains "FirstPerson," it doesn't work like in FPS games
+
+//* PointerLockControls
+// PointerLockControls uses the pointer lock JavaScript API. This API hides the cursor, keeps it centered, and keeps sending the movements in the mousemove event callback. With this API, you can create FPS games right inside the browser. While this class sounds very promising if you want to create that kind of interaction, it'll only handle the camera rotation when the pointer is locked. You'll have to handle the camera position and game physics by yourself.
+
+//* OrbitControls
+// OrbitControls is very similar to the controls we made in the previous lesson. You can rotate around a point with the left mouse, translate laterally using the right mouse, and zoom in or out using the wheel.
+
+//* TrackballControls
+// TrackballControls is just like OrbitControls but there are no limits in terms of vertical angle. You can keep rotating and do spins with the camera even if the scene gets upside down.
+
+//* TransformControls
+// TransformControls has nothing to do with the camera. You can use it to add a gizmo to an object to move that object.
+
+//* DragControls
+// Just like the TransformControls, DragControls has nothing to do with the camera. You can use it to move objects on a plane facing the camera by drag and dropping them.
