@@ -8,23 +8,69 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
 
-// Sizes
+// Scene
+const scene = new THREE.Scene();
+
+/**
+ * Object
+ */
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
+
+/**
+ * Sizes
+ */
 const sizes = {
   width: 800,
   height: 600,
 };
 
-// Scene
-const scene = new THREE.Scene();
-
-// Object
-const mesh = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1, 5, 5, 5),
-  new THREE.MeshBasicMaterial({ color: 0xff0000 })
+/**
+ * Camera
+ */
+// Base camera
+const camera = new THREE.PerspectiveCamera(
+  75,
+  sizes.width / sizes.height,
+  0.1,
+  100
 );
-scene.add(mesh);
+camera.position.z = 3;
+scene.add(camera);
 
-// CAMERA
+// Controls
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+
+/**
+ * Renderer
+ */
+const renderer = new THREE.WebGLRenderer({
+  canvas: canvas,
+});
+renderer.setSize(sizes.width, sizes.height);
+
+/**
+ * Animate
+ */
+const clock = new THREE.Clock();
+
+const tick = () => {
+  const elapsedTime = clock.getElapsedTime();
+
+  // Update controls
+  controls.update();
+
+  // Render
+  renderer.render(scene, camera);
+
+  // Call tick again on the next frame
+  window.requestAnimationFrame(tick);
+};
+
+tick();
 
 //  PerspectiveCamera
 // PerspectiveCamera class needs some parameters to be instantiated
@@ -80,27 +126,6 @@ scene.add(mesh);
 
 // We now have a cube that looks like a cube.
 
-// Camera
-const camera = new THREE.PerspectiveCamera(
-  75,
-  sizes.width / sizes.height,
-  1,
-  1000
-);
-
-// const aspectRatio = sizes.width / sizes.height
-// const camera = new THREE.OrthographicCamera(- 1 * aspectRatio, 1 * aspectRatio, 1, - 1, 0.1, 100)
-
-// camera.position.x = 2
-// camera.position.y = 2
-camera.position.z = 3;
-camera.lookAt(mesh.position);
-scene.add(camera);
-
-// Controls
-const controls = new OrbitControls(camera, canvas)
-controls.target.y = 2
-
 // To control the camera with our mouse, first of all, we want to know the mouse coordinates. We can do that using native JavaScript by listening to the mousemove event with addEventListener.
 
 // The coordinates will be located in the argument of the callback function as event.clientX and event.clientY:
@@ -124,10 +149,10 @@ controls.target.y = 2
 // Just like the size variable, we will create a cursor variable with default x and y properties and then update those properties in the mousemove callback:
 
 // Cursor
-const cursor = {
-  x: 0,
-  y: 0,
-};
+// const cursor = {
+//   x: 0,
+//   y: 0,
+// };
 
 // window.addEventListener("mousemove", (event) => {
 //   cursor.x = event.clientX / sizes.width - 0.5;
@@ -143,10 +168,10 @@ const cursor = {
 // it's working but the axes movements seem kind of wrong. This is due to the position.y axis being positive when going upward in Three.js but the clientY axis being positive when going downward in the webpage.
 
 // We can simply invert the cursor.y while updating it by adding a - in front of the whole formula (don't forget the parentheses):
-window.addEventListener("mousemove", (event) => {
-  cursor.x = event.clientX / sizes.width - 0.5;
-  cursor.y = -(event.clientY / sizes.height - 0.5);
-});
+// window.addEventListener("mousemove", (event) => {
+//   cursor.x = event.clientX / sizes.width - 0.5;
+//   cursor.y = -(event.clientY / sizes.height - 0.5);
+// });
 
 // Finally, we can increase the amplitude by multiplying the cursor.x and cursor.y and ask the camera to look at the mesh using the lookAt(...) method. (Animate section ** 2 //commented)
 
@@ -156,48 +181,6 @@ window.addEventListener("mousemove", (event) => {
 // We can access an approximation of π in native JavaScript using Math.PI.
 
 // To increase the radius of that circle, we can simply multiply the result of Math.sin(...) and Math.cos(...):
-
-// Renderer
-const renderer = new THREE.WebGLRenderer({
-  canvas: canvas,
-});
-renderer.setSize(sizes.width, sizes.height);
-
-// Animate
-const clock = new THREE.Clock();
-
-const loop = () => {
-  const elapsedTime = clock.getElapsedTime();
-
-  // Update objects
-  // mesh.rotation.y = elapsedTime;
-
-  // Update camera ** 1 //commented
-  //   camera.position.x = cursor.x;
-  //   camera.position.y = cursor.y;
-
-  // Update camera ** 2 //commented
-  //   camera.position.x = cursor.x * 5;
-  //   camera.position.y = cursor.y * 5;
-  //   camera.lookAt(mesh.position);
-
-  // Update camera ** 3 //commented
-  // camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 2;
-  // camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 2;
-  // camera.position.y = cursor.y * 3;
-  // camera.lookAt(mesh.position);
-
-  // Update controls
-  controls.update()
-
-  // Render
-  renderer.render(scene, camera);
-
-  // Call loop again on the next frame
-  // window.requestAnimationFrame(loop);
-};
-
-loop();
 
 // EXAMPLE ORBIT CONTROLS
 // INSTANTIATE ORBIT CONTROLS
