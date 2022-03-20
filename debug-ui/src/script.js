@@ -91,6 +91,9 @@ tick();
 
 // Debug
 const gui = new dat.GUI();
-gui.add(mesh.position, "x", -3, 3, 0.01);
-gui.add(mesh.position, "y", -3, 3, 0.01);
-gui.add(mesh.position, "z", -3, 3, 0.01);
+// gui.add(mesh.position, "x", -3, 3, 0.01);
+// gui.add(mesh.position, "y", -3, 3, 0.01);
+// gui.add(mesh.position, "z", -3, 3, 0.01);
+
+// With method
+gui.add(mesh.position, "x").min(-3).max(3).step(0.01);
