@@ -9,6 +9,9 @@ import * as dat from "lil-gui";
  */
 const parameters = {
   color: 0xff0000,
+  spin: () => {
+    gsap.to(mesh.rotation, { duration: 1, y: mesh.rotation.y + 10 });
+  },
 };
 
 // Canvas
@@ -95,6 +98,7 @@ tick();
 
 // Debug
 const gui = new dat.GUI();
+// * Remember the values in the first parameter must be an object, and the second is the property we want to change
 // gui.add(mesh.position, "x", -3, 3, 0.01);
 // gui.add(mesh.position, "y", -3, 3, 0.01);
 // gui.add(mesh.position, "z", -3, 3, 0.01);
@@ -103,12 +107,18 @@ const gui = new dat.GUI();
 gui.add(mesh.position, "x").min(-3).max(3).step(0.01).name("x axis");
 gui.add(mesh, "visible");
 gui.add(material, "wireframe");
+
 gui.addColor(parameters, "color").onChange(() => {
   material.color.set(parameters.color);
 });
 
+// functions
+gui.add(parameters, "spin");
+
 // ^^^^ Adding color ^^^^
 // First, we need to use addColor(...) instead of add(...). This is due to Dat.GUI not being able to know if you want to tweak a text, a number or a color just by the type of the property. Secondly, you'll have to create an intermediate object with the color in its properties and use that property in your material. That is due to the Three.js material not having a clean and accessible value like #ff0000. Create a parameter variable at the start of your code right after the import part.
 
-// We should see a color picker in your panel. The problem is that changing this color doesn't affect the material. It does change the color property of the parameter variable, but we don't even use that variable in our material. To fix that, we need Dat.GUI to alert us when the value changed. We can do that by chaining the onChange(...) method and updating the material color using material.color.set(...). This method is very useful because of how many formats you can use like '#ff0000', '#f00', 0xff0000 or even 'red'. 
+// We should see a color picker in your panel. The problem is that changing this color doesn't affect the material. It does change the color property of the parameter variable, but we don't even use that variable in our material. To fix that, we need Dat.GUI to alert us when the value changed. We can do that by chaining the onChange(...) method and updating the material color using material.color.set(...). This method is very useful because of how many formats you can use like '#ff0000', '#f00', 0xff0000 or even 'red'.
 // ! add the parameters.color property in our material:
+
+// To trigger a function, like the color value, we must add that function to an object. We can use the parameters object we created earlier to add a spin property containing the function that will animate the cube. (added in the parameters object at the top)
