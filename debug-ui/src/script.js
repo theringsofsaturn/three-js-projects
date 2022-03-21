@@ -113,7 +113,7 @@ gui.addColor(parameters, "color").onChange(() => {
 });
 
 // functions
-gui.add(parameters, "spin");
+gui.add(parameters, "spin"); // function in parameters object
 
 // ^^^^ Adding color ^^^^
 // First, we need to use addColor(...) instead of add(...). This is due to Dat.GUI not being able to know if you want to tweak a text, a number or a color just by the type of the property. Secondly, you'll have to create an intermediate object with the color in its properties and use that property in your material. That is due to the Three.js material not having a clean and accessible value like #ff0000. Create a parameter variable at the start of your code right after the import part.
