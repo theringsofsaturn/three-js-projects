@@ -2,20 +2,26 @@ import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-/**
- * Base
- */
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
 
 // Scene
 const scene = new THREE.Scene();
 
+// TEXTURES
+const image = new Image();
+const texture = new THREE.Texture(image);
+
+image.onload = () => {
+  texture.needsUpdate = true;
+};
+image.src = "/textures/door/color.jpg";
+
 /**
  * Object
  */
 const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const material = new THREE.MeshBasicMaterial({ map: texture });
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
@@ -89,7 +95,6 @@ const tick = () => {
 
 tick();
 
-// TEXTURES
 /**
  * Textures are images that will cover the surface of our geometries. Many types of textures can have different effects on the appearance of our geometry. It's not just about the color.
 
@@ -191,4 +196,3 @@ const material = new THREE.MeshBasicMaterial({ map: texture })
 We should see the door texture on each side of our cube.
 
  */
-
