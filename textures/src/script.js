@@ -9,13 +9,31 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 // TEXTURES
-const image = new Image();
-const texture = new THREE.Texture(image);
 
-image.onload = () => {
-  texture.needsUpdate = true;
-};
-image.src = "/textures/door/color.jpg";
+// Native javaScript method:
+
+// const image = new Image();
+// const texture = new THREE.Texture(image);
+
+// image.onload = () => {
+//   texture.needsUpdate = true;
+// };
+// image.src = "/textures/door/color.jpg";
+
+// TextureLoader() method:
+const textureLoader = new THREE.TextureLoader(); // One TextureLoader can load multiple textures
+const texture = textureLoader.load(
+  "/textures/door/color.jpg",
+  () => {
+    console.log("loading finished");
+  },
+  () => {
+    console.log("loading progressing");
+  },
+  () => {
+    console.log("loading error");
+  }
+);
 
 /**
  * Object
