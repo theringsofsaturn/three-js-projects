@@ -21,19 +21,26 @@ const scene = new THREE.Scene();
 // image.src = "/textures/door/color.jpg";
 
 // TextureLoader() method:
-const textureLoader = new THREE.TextureLoader(); // One TextureLoader can load multiple textures
-const texture = textureLoader.load(
-  "/textures/door/color.jpg",
-  () => {
-    console.log("loading finished");
-  },
-  () => {
-    console.log("loading progressing");
-  },
-  () => {
-    console.log("loading error");
-  }
-);
+const loadingManager = new THREE.LoadingManager();
+
+loadingManager.onStart = () => {
+  console.log("Started");
+};
+
+loadingManager.onLoad = () => {
+  console.log("Loaded");
+};
+
+loadingManager.onProgress = () => {
+  console.log("Progress");
+};
+
+loadingManager.onError = () => {
+  console.log("Error");
+};
+
+const textureLoader = new THREE.TextureLoader(loadingManager); // One TextureLoader can load multiple textures
+const texture = textureLoader.load("/textures/door/color.jpg");
 
 /**
  * Object
