@@ -66,7 +66,10 @@ colorTexture.wrapT = THREE.RepeatWrapping;
 // colorTexture.offset.y = 0.5
 
 // Rotate
-// colorTexture.rotation = Math.PI * 0.25;
+colorTexture.rotation = Math.PI * 0.25
+// Change the pivot of the rotation to the center
+colorTexture.center.x = 0.5
+colorTexture.center.y = 0.5
 
 /**
  * Object
