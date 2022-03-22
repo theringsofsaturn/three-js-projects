@@ -44,7 +44,9 @@ const colorTexture = textureLoader.load("/textures/door/color.jpg");
 const alphaTexture = textureLoader.load("/textures/door/alpha.jpg");
 const heightTexture = textureLoader.load("/textures/door/height.jpg");
 const normalTexture = textureLoader.load("/textures/door/normal.jpg");
-const ambientOcclusionTexture = textureLoader.load("/textures/door/ambientOcclusion.jpg");
+const ambientOcclusionTexture = textureLoader.load(
+  "/textures/door/ambientOcclusion.jpg"
+);
 const metalnessTexture = textureLoader.load("/textures/door/metalness.jpg");
 const roughnessTexture = textureLoader.load("/textures/door/roughness.jpg");
 
@@ -52,11 +54,19 @@ const roughnessTexture = textureLoader.load("/textures/door/roughness.jpg");
 // console.log(geometry.attributes.uv)
 
 // Repeat Texture
-colorTexture.repeat.x = 2
-colorTexture.repeat.y = 3
+colorTexture.repeat.x = 2;
+colorTexture.repeat.y = 3;
+colorTexture.wrapS = THREE.RepeatWrapping;
+colorTexture.wrapT = THREE.RepeatWrapping;
+// colorTexture.wrapS = THREE.MirroredRepeatWrapping
+// colorTexture.wrapT = THREE.MirroredRepeatWrapping
 
-colorTexture.wrapS = THREE.RepeatWrapping
-colorTexture.wrapT = THREE.RepeatWrapping
+// Offset
+// colorTexture.offset.x = 0.5
+// colorTexture.offset.y = 0.5
+
+// Rotate
+// colorTexture.rotation = Math.PI * 0.25;
 
 /**
  * Object
