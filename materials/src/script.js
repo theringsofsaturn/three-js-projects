@@ -28,7 +28,18 @@ const scene = new THREE.Scene();
 /**
  * Objects
  */
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+// const material = new THREE.MeshBasicMaterial(); // basic material
+// const material = new THREE.MeshNormalMaterial(); // normal material
+const material = new THREE.MeshMatcapMaterial(); // matcap material
+material.matcap = matcapTexture;
+
+// material.map = doorColorTexture; // adding the texture
+// material.color.set("red") // change the color
+// material.wireframe = true; // show the wireframe
+// material.opacity = 0.5; // change the opacity //! (will not work without addind trasparency)
+// material.transparent = true;
+// material.alphaMap = doorAlphaTexture; //! as with opacity, we need also transparency to true
+material.side = THREE.DoubleSide; // See both sides of the object's material (there's also front and back side)
 
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), material);
 sphere.position.x = -1.5;
@@ -42,6 +53,18 @@ const torus = new THREE.Mesh(
 torus.position.x = 1.5;
 
 scene.add(sphere, plane, torus);
+
+/**
+ * Lights
+ */
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+
+const pointLight = new THREE.PointLight(0xffffff, 0.5);
+pointLight.position.x = 2;
+pointLight.position.y = 3;
+pointLight.position.z = 4;
+scene.add(pointLight);
 
 /**
  * Sizes
