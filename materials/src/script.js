@@ -1,7 +1,7 @@
 import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import * as dat from 'lil-gui'
+import * as dat from "lil-gui";
 
 /**
  * Debug UI
@@ -13,6 +13,7 @@ const gui = new dat.GUI();
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+const cubeTextureLoader = new THREE.CubeTextureLoader(); //! Instantiate the CubeTextureLoader before instantiating the material and call its load(...) method but use an array of paths instead of one path:
 
 const doorColorTexture = textureLoader.load("/textures/door/color.jpg");
 const doorAlphaTexture = textureLoader.load("/textures/door/alpha.jpg");
@@ -25,6 +26,15 @@ const doorMetalnessTexture = textureLoader.load("/textures/door/metalness.jpg");
 const doorRoughnessTexture = textureLoader.load("/textures/door/roughness.jpg");
 const matcapTexture = textureLoader.load("/textures/matcaps/1.png");
 const gradientTexture = textureLoader.load("/textures/gradients/3.jpg");
+
+const environmentMapTexture = cubeTextureLoader.load([
+  "/textures/environmentMaps/0/px.jpg",
+  "/textures/environmentMaps/0/nx.jpg",
+  "/textures/environmentMaps/0/py.jpg",
+  "/textures/environmentMaps/0/ny.jpg",
+  "/textures/environmentMaps/0/pz.jpg",
+  "/textures/environmentMaps/0/nz.jpg",
+]);
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -59,12 +69,11 @@ const scene = new THREE.Scene();
 // const material = new THREE.MeshToonMaterial() // cartoonish style
 // material.gradientMap = gradientTexture
 
-const material = new THREE.MeshStandardMaterial() // uses PBR >> PBR is becoming the standart
+const material = new THREE.MeshStandardMaterial(); // uses PBR >> PBR is becoming the standart
 material.metalness = 0.5;
 material.roughness = 0.5;
 gui.add(material, "metalness").min(0).max(1).step(0.01); // min-max-precision
 gui.add(material, "roughness").min(0).max(1).step(0.01);
-
 
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), material);
 sphere.position.x = -1.5;
