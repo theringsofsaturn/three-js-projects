@@ -60,7 +60,10 @@ const scene = new THREE.Scene();
 // material.gradientMap = gradientTexture
 
 const material = new THREE.MeshStandardMaterial() // uses PBR >> PBR is becoming the standart
+material.metalness = 0.5;
+material.roughness = 0.5;
 gui.add(material, "metalness").min(0).max(1).step(0.01); // min-max-precision
+gui.add(material, "roughness").min(0).max(1).step(0.01);
 
 
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), material);
