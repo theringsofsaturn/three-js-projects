@@ -1,6 +1,13 @@
 import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import * as dat from 'lil-gui'
+
+/**
+ * Debug UI
+ */
+
+const gui = new dat.GUI();
 
 /**
  * Textures
@@ -29,17 +36,32 @@ const scene = new THREE.Scene();
  * Objects
  */
 // const material = new THREE.MeshBasicMaterial(); // basic material
-// const material = new THREE.MeshNormalMaterial(); // normal material
-const material = new THREE.MeshMatcapMaterial(); // matcap material
-material.matcap = matcapTexture;
-
 // material.map = doorColorTexture; // adding the texture
 // material.color.set("red") // change the color
 // material.wireframe = true; // show the wireframe
 // material.opacity = 0.5; // change the opacity //! (will not work without addind trasparency)
 // material.transparent = true;
 // material.alphaMap = doorAlphaTexture; //! as with opacity, we need also transparency to true
-material.side = THREE.DoubleSide; // See both sides of the object's material (there's also front and back side)
+// material.side = THREE.DoubleSide; // See both sides of the object's material (there's also front and back side)
+
+// const material = new THREE.MeshNormalMaterial(); // normal material
+// material.flatShading = true;
+
+// const material = new THREE.MeshMatcapMaterial(); // matcap material
+// material.matcap = matcapTexture;
+
+// const material = new THREE.MeshLambertMaterial() // (reacts to light)
+
+// const material = new THREE.MeshPhongMaterial();
+// material.shininess = 100; // ads a shiny point
+// material.specular = new THREE.Color(0xff0000); // adds color to the point of shininess
+
+// const material = new THREE.MeshToonMaterial() // cartoonish style
+// material.gradientMap = gradientTexture
+
+const material = new THREE.MeshStandardMaterial() // uses PBR >> PBR is becoming the standart
+gui.add(material, "metalness").min(0).max(1).step(0.01); // min-max-precision
+
 
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), material);
 sphere.position.x = -1.5;
