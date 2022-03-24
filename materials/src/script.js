@@ -35,6 +35,7 @@ const environmentMapTexture = cubeTextureLoader.load([
   "/textures/environmentMaps/0/pz.jpg",
   "/textures/environmentMaps/0/nz.jpg",
 ]);
+//* We can now use the environmentMapTexture in the envMap property of our material. (added to materials)
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -72,6 +73,8 @@ const scene = new THREE.Scene();
 const material = new THREE.MeshStandardMaterial(); // uses PBR >> PBR is becoming the standart
 material.metalness = 0.5;
 material.roughness = 0.5;
+material.envMap = environmentMapTexture;
+
 gui.add(material, "metalness").min(0).max(1).step(0.01); // min-max-precision
 gui.add(material, "roughness").min(0).max(1).step(0.01);
 
