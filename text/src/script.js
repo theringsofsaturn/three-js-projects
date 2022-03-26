@@ -22,6 +22,7 @@ const scene = new THREE.Scene();
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+const matcapTexture = textureLoader.load("/textures/matcaps/3.png");
 
 /**
  * Fonts
@@ -41,14 +42,16 @@ fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
     bevelSegments: 4,
   });
 
-  textGeometry.computeBoundingBox();
-  textGeometry.translate(
-    -(textGeometry.boundingBox.max.x - 0.02) * 0.5, // Subtract bevel size
-    -(textGeometry.boundingBox.max.y - 0.02) * 0.5, // Subtract bevel size
-    -(textGeometry.boundingBox.max.z - 0.03) * 0.5 // Subtract bevel thickness
-  );
+  //   textGeometry.computeBoundingBox();
+  //   textGeometry.translate(
+  //     -(textGeometry.boundingBox.max.x - 0.02) * 0.5, // Subtract bevel size
+  //     -(textGeometry.boundingBox.max.y - 0.02) * 0.5, // Subtract bevel size
+  //     -(textGeometry.boundingBox.max.z - 0.03) * 0.5 // Subtract bevel thickness
+  //   );
 
-  const textMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
+  textGeometry.center();
+
+  const textMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture })
   const text = new THREE.Mesh(textGeometry, textMaterial);
   scene.add(text);
 });
