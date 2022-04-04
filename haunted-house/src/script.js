@@ -2,7 +2,7 @@ import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
-import { MeshStandardMaterial } from "three";
+import { MeshStandardMaterial, PlaneBufferGeometry } from "three";
 
 /**
  * Base
@@ -46,6 +46,15 @@ const roof = new THREE.Mesh(
 roof.position.y = 2.5 + 0.5;
 roof.rotation.y = Math.PI / 4;
 house.add(roof);
+
+// Door
+const door = new THREE.Mesh(
+  new PlaneBufferGeometry(2, 2),
+  new THREE.MeshStandardMaterial({ color: "#aa7b7b" })
+);
+
+door.position.z = 2 + 0.1;
+house.add(door);
 
 // Floor
 const floor = new THREE.Mesh(
