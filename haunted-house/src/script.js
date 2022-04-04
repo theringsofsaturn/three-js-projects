@@ -2,6 +2,7 @@ import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
+import { MeshStandardMaterial } from "three";
 
 /**
  * Base
@@ -32,8 +33,19 @@ const walls = new THREE.Mesh(
   new THREE.BoxGeometry(4, 2.5, 4),
   new THREE.MeshStandardMaterial({ color: "#ac8e82" })
 );
-walls.position.y(1.25);
+walls.position.y = 1.25;
 house.add(walls);
+
+// Roof
+
+const roof = new THREE.Mesh(
+  new THREE.ConeBufferGeometry(3.5, 1, 4),
+  new MeshStandardMaterial({ color: "#b35f45" })
+);
+
+roof.position.y = 2.5 + 0.5;
+roof.rotation.y = Math.PI / 4;
+house.add(roof);
 
 // Floor
 const floor = new THREE.Mesh(
