@@ -80,7 +80,9 @@ grassRoughnessTexture.wrapT = THREE.RepeatWrapping;
 const house = new THREE.Group();
 scene.add(house);
 
-// Walls
+/**
+ * Walls
+ */
 const walls = new THREE.Mesh(
   new THREE.BoxGeometry(4, 2.5, 4),
   new THREE.MeshStandardMaterial({
@@ -98,8 +100,9 @@ walls.geometry.setAttribute(
 walls.position.y = 1.25;
 house.add(walls);
 
-// Roof
-
+/**
+ * Roof
+ */
 const roof = new THREE.Mesh(
   new THREE.ConeGeometry(3.5, 1, 4),
   new MeshStandardMaterial({ color: "#b35f45" })
@@ -109,7 +112,9 @@ roof.position.y = 2.5 + 0.5;
 roof.rotation.y = Math.PI / 4;
 house.add(roof);
 
-// Door
+/**
+ * Door
+ */
 const door = new THREE.Mesh(
   new THREE.PlaneGeometry(2, 2, 100, 100),
   new THREE.MeshStandardMaterial({
@@ -134,7 +139,9 @@ door.position.y = 0.9;
 door.position.z = 2; // to avoid z-fighting add 0.1 to the z position
 house.add(door);
 
-// Bushes
+/**
+ * Bushes
+ */
 const bushGeometry = new THREE.SphereGeometry(1, 16, 16);
 const bushMaterial = new THREE.MeshStandardMaterial({ color: "#89c854" });
 
@@ -156,7 +163,9 @@ bush4.position.set(-1.6, 0.05, 2.6);
 
 house.add(bush1, bush2, bush3, bush4);
 
-// Graves
+/**
+ * Graves
+ */
 const graves = new THREE.Group();
 scene.add(graves);
 
@@ -217,6 +226,16 @@ doorLight.position.set(0, 2.2, 2.7);
 house.add(doorLight); // doorLight is part of the house group
 
 /**
+ * Ghosts
+ */
+const ghost1 = new THREE.PointLight("#ff00ff", 2, 3);
+scene.add(ghost1);
+const ghost2 = new THREE.PointLight("#00ffff", 2, 3);
+scene.add(ghost2);
+const ghost3 = new THREE.PointLight("#ffff00", 2, 3);
+scene.add(ghost3);
+
+/**
  * Sizes
  */
 const sizes = {
@@ -272,17 +291,32 @@ renderer.setClearColor("#262837");
  */
 const clock = new THREE.Clock();
 
-const tick = () => {
+const loop = () => {
   const elapsedTime = clock.getElapsedTime();
 
-  // Update controls
-  controls.update();
+  // Update Ghosts
+  const ghosts1Angle = elapsedTime * 0.5; // using the time as the angle. It will rotate in a circle
+  ghost1.position.x = Math.cos(ghosts1Angle) * 4;
+  ghost1.position.z = Math.sin(ghosts1Angle) * 4;
+  ghost1.position.y = Math.sin(elapsedTime) * 3;
+
+  const ghosts2Angle = -elapsedTime * 0.32;
+  ghost2.position.x = Math.cos(ghosts2Angle) * 4;
+  ghost2.position.z = Math.sin(ghosts2Angle) * 4;
+  ghost2.position.y = Math.sin(elapsedTime * 4) + Math.sin(elapsedTime) * 2.5;
+
+  const ghosts3Angle = -elapsedTime * 0.18;
+  ghost3.position.x =
+    Math.cos(ghosts3Angle) * (7 + Math.sin(elapsedTime * 0.32));
+  ghost3.position.z =
+    Math.sin(ghosts3Angle) * (7 + Math.sin(elapsedTime * 0.5));
+  ghost3.position.y = Math.sin(elapsedTime * 5) + Math.sin(elapsedTime) * 2;
 
   // Render
   renderer.render(scene, camera);
 
-  // Call tick again on the next frame
-  window.requestAnimationFrame(tick);
+  // Call loop again on the next frame
+  window.requestAnimationFrame(loop);
 };
 
-tick();
+loop();
