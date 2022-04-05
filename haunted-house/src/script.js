@@ -232,9 +232,9 @@ house.add(doorLight); // doorLight is part of the house group
  */
 const ghost1 = new THREE.PointLight("#ffffff", 2, 3);
 scene.add(ghost1);
-const ghost2 = new THREE.PointLight("#262837", 2, 3);
+const ghost2 = new THREE.PointLight("#ffffff", 2, 3);
 scene.add(ghost2);
-const ghost3 = new THREE.PointLight("#ff7d46", 2, 3);
+const ghost3 = new THREE.PointLight("#ffffff", 2, 3);
 scene.add(ghost3);
 
 /**
