@@ -8,7 +8,7 @@ import { MeshStandardMaterial, PlaneGeometry } from "three";
  * Base
  */
 // Debug
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -210,16 +210,16 @@ scene.add(floor);
  */
 // Ambient light
 const ambientLight = new THREE.AmbientLight("#b9d5ff", 0.12);
-gui.add(ambientLight, "intensity").min(0).max(1).step(0.001);
+// gui.add(ambientLight, "intensity").min(0).max(1).step(0.001);
 scene.add(ambientLight);
 
 // Directional light
 const moonLight = new THREE.DirectionalLight("#b9d5ff", 0.12);
 moonLight.position.set(4, 5, -2);
-gui.add(moonLight, "intensity").min(0).max(1).step(0.001);
-gui.add(moonLight.position, "x").min(-5).max(5).step(0.001);
-gui.add(moonLight.position, "y").min(-5).max(5).step(0.001);
-gui.add(moonLight.position, "z").min(-5).max(5).step(0.001);
+// gui.add(moonLight, "intensity").min(0).max(1).step(0.001);
+// gui.add(moonLight.position, "x").min(-5).max(5).step(0.001);
+// gui.add(moonLight.position, "y").min(-5).max(5).step(0.001);
+// gui.add(moonLight.position, "z").min(-5).max(5).step(0.001);
 scene.add(moonLight);
 
 // Door light
@@ -230,11 +230,11 @@ house.add(doorLight); // doorLight is part of the house group
 /**
  * Ghosts
  */
-const ghost1 = new THREE.PointLight("#ff00ff", 2, 3);
+const ghost1 = new THREE.PointLight("#ffffff", 2, 3);
 scene.add(ghost1);
-const ghost2 = new THREE.PointLight("#00ffff", 2, 3);
+const ghost2 = new THREE.PointLight("#262837", 2, 3);
 scene.add(ghost2);
-const ghost3 = new THREE.PointLight("#ffff00", 2, 3);
+const ghost3 = new THREE.PointLight("#ff7d46", 2, 3);
 scene.add(ghost3);
 
 /**
@@ -292,6 +292,8 @@ renderer.setClearColor("#262837");
  * Shadows
  */
 renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
 moonLight.castShadow = true;
 doorLight.castShadow = true;
 ghost1.castShadow = true;
@@ -305,6 +307,22 @@ bush3.castShadow = true;
 bush4.castShadow = true;
 
 floor.receiveShadow = true;
+
+doorLight.shadow.mapSize.width = 256;
+doorLight.shadow.mapSize.height = 256;
+doorLight.shadow.camera.far = 7;
+
+ghost1.shadow.mapSize.width = 256;
+ghost1.shadow.mapSize.height = 256;
+ghost1.shadow.camera.far = 7;
+
+ghost2.shadow.mapSize.width = 256;
+ghost2.shadow.mapSize.height = 256;
+ghost2.shadow.camera.far = 7;
+
+ghost3.shadow.mapSize.width = 256;
+ghost3.shadow.mapSize.height = 256;
+ghost3.shadow.camera.far = 7;
 
 /**
  * Animate
