@@ -35,6 +35,15 @@ const doorNormalTexture = textureLoader.load("/textures/door/normal.jpg");
 const doorMetalnessTexture = textureLoader.load("/textures/door/metalness.jpg");
 const doorRoughnessTexture = textureLoader.load("/textures/door/roughness.jpg");
 
+const bricksColorTexture = textureLoader.load("/textures/bricks/color.jpg");
+const bricksAmbientOcclusionTexture = textureLoader.load(
+  "/textures/bricks/ambientOcclusion.jpg"
+);
+const bricksNormalTexture = textureLoader.load("/textures/bricks/normal.jpg");
+const bricksRoughnessTexture = textureLoader.load(
+  "/textures/bricks/roughness.jpg"
+);
+
 /**
  * House
  */
@@ -45,7 +54,9 @@ scene.add(house);
 // Walls
 const walls = new THREE.Mesh(
   new THREE.BoxGeometry(4, 2.5, 4),
-  new THREE.MeshStandardMaterial({ color: "#ac8e82" })
+  new THREE.MeshStandardMaterial({ 
+    map: bricksColorTexture,
+  })
 );
 walls.position.y = 1.25;
 house.add(walls);
@@ -115,7 +126,7 @@ scene.add(graves);
 const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2);
 const graveMaterial = new THREE.MeshStandardMaterial({ color: "#b2b6b1" });
 
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < 20; i++) {
   const angle = Math.random() * Math.PI * 2;
   const radius = 3 + Math.random() * 6;
   const x = Math.cos(angle) * radius;
