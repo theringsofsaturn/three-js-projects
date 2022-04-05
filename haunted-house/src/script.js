@@ -160,10 +160,18 @@ for (let i = 0; i < 20; i++) {
 // Floor
 const floor = new THREE.Mesh(
   new THREE.PlaneGeometry(20, 20),
-  new THREE.MeshStandardMaterial({ 
+  new THREE.MeshStandardMaterial({
     map: grassColorTexture,
-   })
+    aoMap: grassAmbientOcclusionTexture,
+    normalMap: grasssNormalTexture,
+    roughnessMap: grassRoughnessTexture,
+  })
 );
+floor.geometry.setAttribute(
+  "uv",
+  new THREE.Float32BufferAttribute(floor.geometry.attributes.uv.array, 2)
+);
+
 floor.rotation.x = -Math.PI * 0.5;
 floor.position.y = 0;
 scene.add(floor);
