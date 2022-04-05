@@ -160,7 +160,9 @@ for (let i = 0; i < 20; i++) {
 // Floor
 const floor = new THREE.Mesh(
   new THREE.PlaneGeometry(20, 20),
-  new THREE.MeshStandardMaterial({ color: "#a9c388" })
+  new THREE.MeshStandardMaterial({ 
+    map: grassColorTexture,
+   })
 );
 floor.rotation.x = -Math.PI * 0.5;
 floor.position.y = 0;
