@@ -46,6 +46,7 @@ const bricksRoughnessTexture = textureLoader.load(
   "/textures/bricks/roughness.jpg"
 );
 
+// Grass Textures
 const grassColorTexture = textureLoader.load("/textures/grass/color.jpg");
 const grassAmbientOcclusionTexture = textureLoader.load(
   "/textures/grass/ambientOcclusion.jpg"
@@ -54,6 +55,23 @@ const grasssNormalTexture = textureLoader.load("/textures/grass/normal.jpg");
 const grassRoughnessTexture = textureLoader.load(
   "/textures/grass/roughness.jpg"
 );
+
+grassColorTexture.repeat.set(8, 8);
+grassAmbientOcclusionTexture.repeat.set(8, 8);
+grasssNormalTexture.repeat.set(8, 8);
+grassRoughnessTexture.repeat.set(8, 8);
+
+// By deafult the texture doesn't repeat. We need to tell to repeat to each texture
+// Repeat texture on X and Y axis (wrapS and wrapT)
+grassColorTexture.wrapS = THREE.RepeatWrapping;
+grassAmbientOcclusionTexture.wrapS = THREE.RepeatWrapping;
+grasssNormalTexture.wrapS = THREE.RepeatWrapping;
+grassRoughnessTexture.wrapS = THREE.RepeatWrapping;
+
+grassColorTexture.wrapT = THREE.RepeatWrapping;
+grassAmbientOcclusionTexture.wrapT = THREE.RepeatWrapping;
+grasssNormalTexture.wrapT = THREE.RepeatWrapping;
+grassRoughnessTexture.wrapT = THREE.RepeatWrapping;
 
 /**
  * House
