@@ -25,6 +25,7 @@ scene.fog = fog;
  */
 const textureLoader = new THREE.TextureLoader();
 
+// Door Textures
 const doorColorTexture = textureLoader.load("/textures/door/color.jpg");
 const doorAlphaTexture = textureLoader.load("/textures/door/alpha.jpg");
 const doorAmbientOcclusionTexture = textureLoader.load(
@@ -35,6 +36,7 @@ const doorNormalTexture = textureLoader.load("/textures/door/normal.jpg");
 const doorMetalnessTexture = textureLoader.load("/textures/door/metalness.jpg");
 const doorRoughnessTexture = textureLoader.load("/textures/door/roughness.jpg");
 
+// Bricks Textures
 const bricksColorTexture = textureLoader.load("/textures/bricks/color.jpg");
 const bricksAmbientOcclusionTexture = textureLoader.load(
   "/textures/bricks/ambientOcclusion.jpg"
@@ -42,6 +44,15 @@ const bricksAmbientOcclusionTexture = textureLoader.load(
 const bricksNormalTexture = textureLoader.load("/textures/bricks/normal.jpg");
 const bricksRoughnessTexture = textureLoader.load(
   "/textures/bricks/roughness.jpg"
+);
+
+const grassColorTexture = textureLoader.load("/textures/grass/color.jpg");
+const grassAmbientOcclusionTexture = textureLoader.load(
+  "/textures/grass/ambientOcclusion.jpg"
+);
+const grasssNormalTexture = textureLoader.load("/textures/grass/normal.jpg");
+const grassRoughnessTexture = textureLoader.load(
+  "/textures/grass/roughness.jpg"
 );
 
 /**
