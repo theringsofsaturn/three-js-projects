@@ -16,10 +16,24 @@ const canvas = document.querySelector("canvas.webgl");
 // Scene
 const scene = new THREE.Scene();
 
+// Fog
+const fog = new THREE.Fog("#262837", 1, 15);
+scene.fog = fog;
+
 /**
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+
+const doorColorTexture = textureLoader.load("/textures/door/color.jpg");
+const doorAlphaTexture = textureLoader.load("/textures/door/alpha.jpg");
+const doorAmbientOcclusionTexture = textureLoader.load(
+  "/textures/door/ambientOcclusion.jpg"
+);
+const doorHeightTexture = textureLoader.load("/textures/door/height.jpg");
+const doorNormalTexture = textureLoader.load("/textures/door/normal.jpg");
+const doorMetalnessTexture = textureLoader.load("/textures/door/metalness.jpg");
+const doorRoughnessTexture = textureLoader.load("/textures/door/roughness.jpg");
 
 /**
  * House
@@ -49,11 +63,27 @@ house.add(roof);
 
 // Door
 const door = new THREE.Mesh(
-  new PlaneGeometry(2, 2),
-  new THREE.MeshStandardMaterial({ color: "#aa7b7b" })
+  new THREE.PlaneGeometry(2, 2, 100, 100),
+  new THREE.MeshStandardMaterial({
+    map: doorColorTexture,
+    alphaMap: doorAlphaTexture, // nees tranparent: true to work
+    transparent: true,
+    aoMap: doorAmbientOcclusionTexture,
+    displacementMap: doorHeightTexture,
+    displacementScale: 0.1,
+    normalMap: doorNormalTexture,
+    metalnessMap: doorMetalnessTexture,
+    roughnessMap: doorRoughnessTexture,
+  })
 );
 
-door.position.z = 2 + 0.1;
+door.geometry.setAttribute(
+  "uv",
+  new THREE.Float32BufferAttribute(door.geometry.attributes.uv.array, 2)
+);
+
+door.position.y = 0.9;
+door.position.z = 2; // to avoid z-fighting add 0.1 to the z position
 house.add(door);
 
 // Bushes
@@ -62,11 +92,11 @@ const bushMaterial = new THREE.MeshStandardMaterial({ color: "#89c854" });
 
 const bush1 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush1.scale.set(0.5, 0.5, 0.5);
-bush1.position.set(0.8, 0.2, 2.2);
+bush1.position.set(1.1, 0.2, 2.2);
 
 const bush2 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush2.scale.set(0.25, 0.25, 0.25);
-bush2.position.set(1.4, 0.1, 2.1);
+bush2.position.set(1.7, 0.1, 2.1);
 
 const bush3 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush3.scale.set(0.4, 0.4, 0.4);
@@ -85,7 +115,7 @@ scene.add(graves);
 const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2);
 const graveMaterial = new THREE.MeshStandardMaterial({ color: "#b2b6b1" });
 
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 30; i++) {
   const angle = Math.random() * Math.PI * 2;
   const radius = 3 + Math.random() * 6;
   const x = Math.cos(angle) * radius;
@@ -177,6 +207,7 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor("#262837");
 
 /**
  * Animate
