@@ -54,10 +54,11 @@ scene.add(house);
 // Walls
 const walls = new THREE.Mesh(
   new THREE.BoxGeometry(4, 2.5, 4),
-  new THREE.MeshStandardMaterial({ 
+  new THREE.MeshStandardMaterial({
     map: bricksColorTexture,
     aoMap: bricksAmbientOcclusionTexture,
-
+    normalMap: bricksNormalTexture,
+    roughnessMap: bricksRoughnessTexture,
   })
 );
 walls.geometry.setAttribute(
