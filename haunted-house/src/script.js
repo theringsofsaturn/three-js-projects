@@ -2,7 +2,7 @@ import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
-import { MeshStandardMaterial, PlaneBufferGeometry } from "three";
+import { MeshStandardMaterial, PlaneGeometry } from "three";
 
 /**
  * Base
@@ -39,7 +39,7 @@ house.add(walls);
 // Roof
 
 const roof = new THREE.Mesh(
-  new THREE.ConeBufferGeometry(3.5, 1, 4),
+  new THREE.ConeGeometry(3.5, 1, 4),
   new MeshStandardMaterial({ color: "#b35f45" })
 );
 
@@ -49,7 +49,7 @@ house.add(roof);
 
 // Door
 const door = new THREE.Mesh(
-  new PlaneBufferGeometry(2, 2),
+  new PlaneGeometry(2, 2),
   new THREE.MeshStandardMaterial({ color: "#aa7b7b" })
 );
 
@@ -57,7 +57,7 @@ door.position.z = 2 + 0.1;
 house.add(door);
 
 // Bushes
-const bushGeometry = new THREE.SphereBufferGeometry(1, 16, 16);
+const bushGeometry = new THREE.SphereGeometry(1, 16, 16);
 const bushMaterial = new THREE.MeshStandardMaterial({ color: "#89c854" });
 
 const bush1 = new THREE.Mesh(bushGeometry, bushMaterial);
@@ -77,6 +77,25 @@ bush4.scale.set(0.15, 0.15, 0.15);
 bush4.position.set(-1.6, 0.05, 2.6);
 
 house.add(bush1, bush2, bush3, bush4);
+
+// Graves
+const graves = new THREE.Group();
+scene.add(graves);
+
+const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2);
+const graveMaterial = new THREE.MeshStandardMaterial({ color: "#b2b6b1" });
+
+for (let i = 0; i < 50; i++) {
+  const angle = Math.random() * Math.PI * 2;
+  const radius = 3 + Math.random() * 6;
+  const x = Math.cos(angle) * radius;
+  const z = Math.sin(angle) * radius;
+  const grave = new THREE.Mesh(graveGeometry, graveMaterial);
+  grave.position.set(x, 0.3, z);
+  grave.rotation.y = (Math.random() - 0.5) * 0.4;
+  grave.rotation.z = (Math.random() - 0.5) * 0.4;
+  graves.add(grave);
+}
 
 // Floor
 const floor = new THREE.Mesh(
